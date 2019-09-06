@@ -9,6 +9,8 @@ namespace Tutorial4
     {
         public string create(int id, string name, string role)
         {
+            //Create a new isntance of the employee class
+            //Set the property items to the arg passed to the method
             var record = new Employee
             {
                 id = id,
@@ -16,41 +18,40 @@ namespace Tutorial4
                 role = role
             };
 
+            //Declare a scope of the database context and added the enity then save it to the database
             using (var db = new MyContext())
             {
                 db.Add(record);
                 db.SaveChanges();
             }
 
+            //Return a success string to display on the console
             return "Success";
         }
 
-        public string read()
+        public void read()
         {
+            // Declare a scope of the database context
             using (var db = new MyContext())
             {
+                //Get all the employees that contain Mi like the sql (LIKE %Mi%)
                 var data = from emp in db.employees
                            where emp.name.Contains("Mi")
                            select emp;
 
+                //loop the returned employees 
                 foreach (var employee in data)
-                {
-                    employee.name = "nob head";
-                    db.Update(employee);
-                    
-
+                {                    
+                    //Write what is in the table to the console
                     Console.WriteLine(employee.name);
                     Console.WriteLine(employee.role);
                 }
-
-                db.SaveChanges();
             }
-
-            return "Success";
         }
 
-        public string update(int id)
+        public void update(int id)
         {
+            //Create a instance of the employee with a known id
             var employee = new Employee
             {
                 id = id,
@@ -58,17 +59,19 @@ namespace Tutorial4
                 role = "Test2"
             };
 
+            //Set that instance for update 
             using (var db = new MyContext())
             {
                 db.Update(employee);
                 db.SaveChanges();
-            }
 
-            return "Success";
+                Console.WriteLine(String.Concat("Updated employee ",employee.id));
+            }
         }
 
-        public string delete(int id)
+        public void delete(int id)
         {
+            //Create a instance of the employee with a known id
             var employee = new Employee
             {
                 id = id,
@@ -76,13 +79,14 @@ namespace Tutorial4
                 role = "Test2"
             };
 
+            //Set that instance for update 
             using (var db = new MyContext())
             {
                 db.Remove(employee);
                 db.SaveChanges();
-            }
 
-            return "Success";
+                Console.WriteLine(String.Concat("Deleted employee ", employee.id));
+            }
         }
     }
 }
