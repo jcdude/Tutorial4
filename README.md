@@ -1,4 +1,4 @@
-# .net Core Console App with Poastgres
+# .net Core Console App with Postgres
 
 This is a short tutorial project that instructs you how to use the code first approach in ef core
 
