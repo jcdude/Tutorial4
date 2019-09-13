@@ -9,8 +9,8 @@ using Tutorial4;
 namespace Tutorial4.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20190906143330_tutorial")]
-    partial class tutorial
+    [Migration("20190913131401_tutorial_initial")]
+    partial class tutorial_initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,11 +27,33 @@ namespace Tutorial4.Migrations
 
                     b.Property<string>("name");
 
-                    b.Property<string>("role");
+                    b.Property<int>("roleId");
 
                     b.HasKey("id");
 
+                    b.HasIndex("roleId");
+
                     b.ToTable("employees");
+                });
+
+            modelBuilder.Entity("Tutorial4.Role", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("name");
+
+                    b.HasKey("id");
+
+                    b.ToTable("roles");
+                });
+
+            modelBuilder.Entity("Tutorial4.Employee", b =>
+                {
+                    b.HasOne("Tutorial4.Role", "role")
+                        .WithMany()
+                        .HasForeignKey("roleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

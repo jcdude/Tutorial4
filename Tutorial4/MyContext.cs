@@ -8,6 +8,7 @@ namespace Tutorial4
     public class MyContext : DbContext
     {
         public DbSet<Employee> employees { get; set; }
+        public DbSet<Role> roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

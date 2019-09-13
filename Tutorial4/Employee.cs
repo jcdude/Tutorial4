@@ -8,6 +8,8 @@ namespace Tutorial4
     {
         public int id { get; set; }
         public string name { get; set; }
-        public string role { get; set; }
+        public int roleId { get; set; }
+
+        public Role role { get; set; }
     }
 }

@@ -7,7 +7,27 @@ namespace Tutorial4
 {
     public class CRUD
     {
-        public string create(int id, string name, string role)
+        public Role createRole(int id, string name)
+        {
+            //Create a new isntance of the employee class
+            //Set the property items to the arg passed to the method
+            var record = new Role
+            {
+                id = id,
+                name = name
+            };
+
+            //Declare a scope of the database context and added the enity then save it to the database
+            using (var db = new MyContext())
+            {
+                db.Add(record);
+                db.SaveChanges();
+            }
+
+            //Return a success string to display on the console
+            return record;
+        }
+        public string create(int id, string name, int roleId)
         {
             //Create a new isntance of the employee class
             //Set the property items to the arg passed to the method
@@ -15,7 +35,7 @@ namespace Tutorial4
             {
                 id = id,
                 name = name,
-                role = role
+                roleId = roleId
             };
 
             //Declare a scope of the database context and added the enity then save it to the database
@@ -49,14 +69,14 @@ namespace Tutorial4
             }
         }
 
-        public void update(int id)
+        public void update(int id, string name, Role role)
         {
             //Create a instance of the employee with a known id
             var employee = new Employee
             {
                 id = id,
-                name = "Test",
-                role = "Test2"
+                name = name,
+                role = role
             };
 
             //Set that instance for update 
@@ -74,9 +94,7 @@ namespace Tutorial4
             //Create a instance of the employee with a known id
             var employee = new Employee
             {
-                id = id,
-                name = "Test",
-                role = "Test2"
+                id = id
             };
 
             //Set that instance for update 

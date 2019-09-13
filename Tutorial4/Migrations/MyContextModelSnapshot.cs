@@ -25,11 +25,33 @@ namespace Tutorial4.Migrations
 
                     b.Property<string>("name");
 
-                    b.Property<string>("role");
+                    b.Property<int>("roleId");
 
                     b.HasKey("id");
 
+                    b.HasIndex("roleId");
+
                     b.ToTable("employees");
+                });
+
+            modelBuilder.Entity("Tutorial4.Role", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("name");
+
+                    b.HasKey("id");
+
+                    b.ToTable("roles");
+                });
+
+            modelBuilder.Entity("Tutorial4.Employee", b =>
+                {
+                    b.HasOne("Tutorial4.Role", "role")
+                        .WithMany()
+                        .HasForeignKey("roleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
